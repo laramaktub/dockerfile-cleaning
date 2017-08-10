@@ -41,4 +41,14 @@ RUN apt-get install -y libjson-perl
 RUN apt-get install -y libgraphics-primitive-driver-cairo-perl
 RUN cpan Statistics::PCA
 
+#Installing One Data Client
+
+RUN apt-add-repository ppa:ansible/ansible
+RUN apt-get update && \
+    apt-get install -y ansible && \
+    rm -rf /var/lib/apt/lists/* 
+RUN ansible-galaxy install indigo-dc.oneclient && \
+    ansible-playbook /etc/ansible/roles/indigo-dc.oneclient/tests/test.yml
+
 CMD /bin/bash -l
+
